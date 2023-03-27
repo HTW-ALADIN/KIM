@@ -5,6 +5,6 @@ root: chapters/model_resources
 parts:
   - caption: Code Examples
     chapters:
-      - file: chapters/code_resources/53_constrained_beam_search
-      - file: chapters/code_resources/Generating_Piano_Music_with_Transformer
-      - file: chapters/code_resources/riffusion
+      - file: chapters/code_examples/53_constrained_beam_search
+      - file: chapters/code_examples/Generating_Piano_Music_with_Transformer
+      - file: chapters/code_examples/riffusion
