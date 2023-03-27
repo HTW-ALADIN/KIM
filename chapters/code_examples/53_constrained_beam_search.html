@@ -1,0 +1,920 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Guiding Text Generation with Constrained Beam Search in 🤗 Transformers &#8212; KIM</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/justify.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/analytics_gtag.js"></script>
+    <script src="../../_static/analytics.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/code_examples/53_constrained_beam_search';</script>
+    <link rel="canonical" href="https://HTW-ALADIN.github.io/kim/chapters/code_examples/53_constrained_beam_search.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../model_resources.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">KIM</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../model_resources.html">
+                    Model Resources
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/HTW-ALADIN/kim/source?urlpath=tree/chapters/code_examples/53_constrained_beam_search.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/HTW-ALADIN/kim/blob/source/chapters/code_examples/53_constrained_beam_search.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HTW-ALADIN/kim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HTW-ALADIN/kim/edit/source/chapters/code_examples/53_constrained_beam_search.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HTW-ALADIN/kim/issues/new?title=Issue%20on%20page%20%2Fchapters/code_examples/53_constrained_beam_search.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/code_examples/53_constrained_beam_search.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Guiding Text Generation with Constrained Beam Search in 🤗 Transformers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction"><strong>Introduction</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-difficult"><strong>Why It’s Difficult</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-forcing-a-word"><strong>Example 1: Forcing a Word</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-beam-search"><strong>Traditional Beam Search</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-constrained-beam-search"><strong>With Constrained Beam Search</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-disjunctive-constraints"><strong>Example 2: Disjunctive Constraints</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Traditional Beam search</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-beam-search"><strong>Constrained Beam Search</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#banks"><strong>Banks</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-about-constraint-classes-and-custom-constraints"><strong>More About <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> Classes and Custom Constraints</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="guiding-text-generation-with-constrained-beam-search-in-transformers">
+<h1>Guiding Text Generation with Constrained Beam Search in 🤗 Transformers<a class="headerlink" href="#guiding-text-generation-with-constrained-beam-search-in-transformers" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2><strong>Introduction</strong><a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>This blog post assumes that the reader is familiar with text generation methods using the different variants of beam search, as explained in in the blog post: <a class="reference external" href="https://huggingface.co/blog/how-to-generate">“How to generate text: using different decoding methods for language generation with Transformers”</a></p>
+<p>Unlike ordinary beam search, <strong>constrained</strong> beam search allows us to exert control over the output of text generation. This is useful because, sometimes, we know exactly what we want inside the output. For example, in a Neural Machine Translation task, we might know which words must be included in the final translation with a dictionary lookup. Sometimes, generation outputs that are almost equally possible to a language model might not be equally deseriable for the end-user due to the particular context. Both of these situations could be solved by allowing the users to tell the model which words must be included in the end output.</p>
+<section id="why-it-s-difficult">
+<h3><strong>Why It’s Difficult</strong><a class="headerlink" href="#why-it-s-difficult" title="Permalink to this heading">#</a></h3>
+<p>However, this is actually a very non-trivial problem. This is because the task requires us to force the generation of certain subsequences <em>somewhere</em> in the final output, at <em>some point</em> during the generation.</p>
+<p>Let’s say that we’re want to generate a sentence <code class="docutils literal notranslate"><span class="pre">S</span></code> that has to include the phrase <span class="math notranslate nohighlight">\(p_1=\{ t_1, t_2 \}\)</span> with tokens <span class="math notranslate nohighlight">\(t_1, t_2\)</span> in order. Let’s define the expected sentence <span class="math notranslate nohighlight">\(S\)</span> as:</p>
+<p><span class="math notranslate nohighlight">\(S_{expected} = \{ s_1, s_2, ..., s_k, t_1, t_2, s_{k+1}, ..., s_n \}\)</span></p>
+<p>The problem is that beam search generates the sequence <em>token-by-token</em>. Though not entirely accurate, one can think of beam search as the function <span class="math notranslate nohighlight">\(B(\mathbf{s}_{0:i}) = s_{i+1}\)</span>, where it looks at the currently generated sequence of tokens from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(i\)</span> then predicts the next token at <span class="math notranslate nohighlight">\(i+1\)</span>. But how can this function know, at an arbitrary step <span class="math notranslate nohighlight">\(i &lt; k\)</span>, that the tokens must be generated at some future step <span class="math notranslate nohighlight">\(k\)</span>? Or when it’s at the step <span class="math notranslate nohighlight">\(i=k\)</span>, how can it know for sure that this is the best spot to force the tokens, instead of some future step <span class="math notranslate nohighlight">\(i&gt;k\)</span>?</p>
+<p><img alt="Why constraints are hard" src="https://raw.githubusercontent.com/cwkeam/scientific-images/main/why_constraints_are_hard.png" /></p>
+<p>And what if you have multiple constraints with varying requirements? What if you want to force the phrase <span class="math notranslate nohighlight">\(p_1=\{t_1, t_2\}\)</span> <em>and</em> also the phrase <span class="math notranslate nohighlight">\(p_2=\{ t_3, t_4, t_5, t_6\}\)</span>? What if you want the model to <strong>choose between</strong> the two phrases? What if we want to force the phrase <span class="math notranslate nohighlight">\(p_1\)</span> and force just one phrase among the list of phrases <span class="math notranslate nohighlight">\(\{p_{21}, p_{22}, p_{23}\}\)</span>?</p>
+<p>The above examples are actually very reasonable use-cases, as it will be shown below, and the new constrained beam search feature allows for all of them!</p>
+<p>This post will quickly go over what the new <em><strong>constrained beam search</strong></em> feature can do for you, and then go into deeper details about how it works under the hood.</p>
+</section>
+</section>
+<section id="example-1-forcing-a-word">
+<h2><strong>Example 1: Forcing a Word</strong><a class="headerlink" href="#example-1-forcing-a-word" title="Permalink to this heading">#</a></h2>
+<p>Let’s say we’re trying to translate <code class="docutils literal notranslate"><span class="pre">&quot;How</span> <span class="pre">old</span> <span class="pre">are</span> <span class="pre">you?&quot;</span></code> to German.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;Wie</span> <span class="pre">alt</span> <span class="pre">bist</span> <span class="pre">du?&quot;</span></code> is what you’d say in an informal setting, and <code class="docutils literal notranslate"><span class="pre">&quot;Wie</span> <span class="pre">alt</span> <span class="pre">sind</span> <span class="pre">Sie?&quot;</span></code> is what
+you’d say in a formal setting.</p>
+<p>And depending on the context, we might want one form of formality over the other, but how do we tell the model that?</p>
+<section id="traditional-beam-search">
+<h3><strong>Traditional Beam Search</strong><a class="headerlink" href="#traditional-beam-search" title="Permalink to this heading">#</a></h3>
+<p>Here’s how we would do text translation in the <em><strong>traditional beam search setting.</strong></em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>git+https://github.com/huggingface/transformers.git
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">22.3.1</span> -&gt; <span class=" -Color -Color-Green">23.0.1</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+
+<span class="n">encoder_input_str</span> <span class="o">=</span> <span class="s2">&quot;translate English to German: How old are you?&quot;</span>
+
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">encoder_input_str</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">input_ids</span><span class="p">,</span>
+    <span class="n">num_beams</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">no_repeat_ngram_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">remove_invalid_values</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+None of PyTorch, TensorFlow &gt;= 2.0, or Flax have been found. Models won&#39;t be available and only tokenizers, configuration and file/data utilities can be used.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json:   0%|          | 0.00/1.21k [00:00&lt;?, ?B/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json: 100%|██████████| 1.21k/1.21k [00:00&lt;00:00, 1.50MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)ve/main/spiece.model:   0%|          | 0.00/792k [00:00&lt;?, ?B/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)ve/main/spiece.model: 100%|██████████| 792k/792k [00:00&lt;00:00, 21.1MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)/main/tokenizer.json:   0%|          | 0.00/1.39M [00:00&lt;?, ?B/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)/main/tokenizer.json: 100%|██████████| 1.39M/1.39M [00:00&lt;00:00, 41.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/transformers/models/t5/tokenization_t5_fast.py:155: FutureWarning: This tokenizer was incorrectly instantiated with a model max length of 512 which will be corrected in Transformers v5.
+For now, this behavior is kept to avoid breaking backwards compatibility when padding/encoding with `truncation is True`.
+- Be aware that you SHOULD NOT rely on t5-base automatically truncating your input to 512 when padding/encoding.
+- If you want to encode/pad to sequences longer than 512 you can either instantiate this tokenizer with `model_max_length` or pass `max_length` when encoding/padding.
+- To avoid this warning, please instantiate this tokenizer with `model_max_length` set to your preferred value.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">encoder_input_str</span> <span class="o">=</span> <span class="s2">&quot;translate English to German: How old are you?&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">encoder_input_str</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1065,</span> in <span class="ni">DummyObject.__getattribute__</span><span class="nt">(cls, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1063</span> <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;_from_config&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1064</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1065</span> <span class="n">requires_backends</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_backends</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1053,</span> in <span class="ni">requires_backends</span><span class="nt">(obj, backends)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1051</span> <span class="n">failed</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">available</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">checks</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">available</span><span class="p">()]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1052</span> <span class="k">if</span> <span class="n">failed</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1053</span>     <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">failed</span><span class="p">))</span>
+
+<span class="ne">ImportError</span>: 
+<span class="n">AutoModelForSeq2SeqLM</span> <span class="n">requires</span> <span class="n">the</span> <span class="n">PyTorch</span> <span class="n">library</span> <span class="n">but</span> <span class="n">it</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">environment</span><span class="o">.</span> <span class="n">Checkout</span> <span class="n">the</span> <span class="n">instructions</span> <span class="n">on</span> <span class="n">the</span>
+<span class="n">installation</span> <span class="n">page</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pytorch</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">started</span><span class="o">/</span><span class="n">locally</span><span class="o">/</span> <span class="ow">and</span> <span class="n">follow</span> <span class="n">the</span> <span class="n">ones</span> <span class="n">that</span> <span class="n">match</span> <span class="n">your</span> <span class="n">environment</span><span class="o">.</span>
+<span class="n">Please</span> <span class="n">note</span> <span class="n">that</span> <span class="n">you</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">restart</span> <span class="n">your</span> <span class="n">runtime</span> <span class="n">after</span> <span class="n">installation</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="with-constrained-beam-search">
+<h3><strong>With Constrained Beam Search</strong><a class="headerlink" href="#with-constrained-beam-search" title="Permalink to this heading">#</a></h3>
+<p>But what if we knew that we wanted a formal output instead of the informal one? What if we were able to know from prior knowledge what the generation must include and we were able to <em>inject it</em> into the generation?</p>
+<p>The following is what is possible now with the <code class="docutils literal notranslate"><span class="pre">force_words_ids</span></code> keyword argument to <code class="docutils literal notranslate"><span class="pre">model.generate()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+
+<span class="n">encoder_input_str</span> <span class="o">=</span> <span class="s2">&quot;translate English to German: How old are you?&quot;</span>
+
+<span class="n">force_words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Sie&quot;</span><span class="p">]</span>
+
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">encoder_input_str</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+<span class="n">force_words_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">force_words</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">input_ids</span><span class="p">,</span>
+    <span class="n">force_words_ids</span><span class="o">=</span><span class="n">force_words_ids</span><span class="p">,</span>
+    <span class="n">num_beams</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">no_repeat_ngram_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">remove_invalid_values</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output:
+----------------------------------------------------------------------------------------------------
+Wie alt sind Sie?
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, we were able to guide the generation with prior knowledge about our desired output. Previously we would’ve had to generate a bunch of possible outputs, then filter the ones that fit our requirement. Now we can do that at the generation stage.</p>
+</section>
+</section>
+<section id="example-2-disjunctive-constraints">
+<h2><strong>Example 2: Disjunctive Constraints</strong><a class="headerlink" href="#example-2-disjunctive-constraints" title="Permalink to this heading">#</a></h2>
+<p>We mentioned above about a use-case where we know which words we want included in the final output. An example of this might be using a dictionary lookup during neural machine translation.</p>
+<p>But what if we don’t know which <em>word forms</em> to use, where we’d want outputs like <code class="docutils literal notranslate"><span class="pre">[&quot;raining&quot;,</span> <span class="pre">&quot;rained&quot;,</span> <span class="pre">&quot;rains&quot;,</span> <span class="pre">...]</span></code> to be equally possible? In a more general sense, there are always cases when we don’t want the <em>exact word verbatim</em>, letter by letter, and might be open to other related possibilities too.</p>
+<p>Constraints that allow for this behavior are <em><strong>Disjunctive Constraints</strong></em>, which allow the user to input a list of words, whose purpose is to guide the generation such that the final output must contain just <em>at least one</em> among the list of words.</p>
+<p>Here’s an example that uses a mix of the above two types of constraints:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">GPT2LMHeadModel</span><span class="p">,</span> <span class="n">GPT2Tokenizer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">GPT2LMHeadModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">GPT2Tokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+
+<span class="n">force_word</span> <span class="o">=</span> <span class="s2">&quot;scared&quot;</span>
+<span class="n">force_flexible</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;scream&quot;</span><span class="p">,</span> <span class="s2">&quot;screams&quot;</span><span class="p">,</span> <span class="s2">&quot;screaming&quot;</span><span class="p">,</span> <span class="s2">&quot;screamed&quot;</span><span class="p">]</span>
+
+<span class="n">force_words_ids</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">tokenizer</span><span class="p">([</span><span class="n">force_word</span><span class="p">],</span> <span class="n">add_prefix_space</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="p">(</span><span class="n">force_flexible</span><span class="p">,</span> <span class="n">add_prefix_space</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">starting_text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;The soldiers&quot;</span><span class="p">,</span> <span class="s2">&quot;The child&quot;</span><span class="p">]</span>
+
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">starting_text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">input_ids</span><span class="p">,</span>
+    <span class="n">force_words_ids</span><span class="o">=</span><span class="n">force_words_ids</span><span class="p">,</span>
+    <span class="n">num_beams</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">no_repeat_ngram_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">remove_invalid_values</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output:
+----------------------------------------------------------------------------------------------------
+The soldiers, who were all scared and screaming at each other as they tried to get out of the
+The child was taken to a local hospital where she screamed and scared for her life, police said.
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, the first output used <code class="docutils literal notranslate"><span class="pre">&quot;screaming&quot;</span></code>, the second output used <code class="docutils literal notranslate"><span class="pre">&quot;screamed&quot;</span></code>, and both used <code class="docutils literal notranslate"><span class="pre">&quot;scared&quot;</span></code> verbatim. The list to choose from <code class="docutils literal notranslate"><span class="pre">[&quot;screaming&quot;,</span> <span class="pre">&quot;screamed&quot;,</span> <span class="pre">...]</span></code> doesn’t have to be word forms; this can satisfy any use-case where we need just one from a list of words.</p>
+</section>
+<section id="id1">
+<h2><strong>Traditional Beam search</strong><a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>The following is an example of traditional <strong>beam search</strong>, taken from a previous <a class="reference external" href="https://huggingface.co/blog/how-to-generate">blog post</a>:</p>
+<p><img alt="Beam search" src="https://raw.githubusercontent.com/patrickvonplaten/scientific_images/master/beam_search.png" /></p>
+<p>Unlike greedy search, beam search works by keeping a longer list of hypotheses. In the above picture, we have displayed 3 next possible tokens at each possible step in the generation.</p>
+<p>Here’s another way to look at the first step of the beam search for the above example, in the case of <code class="docutils literal notranslate"><span class="pre">num_beams=3</span></code>:</p>
+<p><img alt="Beam search step 1" src="https://raw.githubusercontent.com/cwkeam/scientific-images/main/beam_1.jpg" /></p>
+<p>Instead of only choosing <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">dog&quot;</span></code> like what a greedy search would do, a beam search would allow <em>further consideration</em> of <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">nice&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">car&quot;</span></code>.</p>
+<p>In the next step, we consider the next possible tokens for each of the three branches we created in the previous step.</p>
+<p><img alt="Beam search step 2" src="https://raw.githubusercontent.com/cwkeam/scientific-images/main/beam_2.jpg" /></p>
+<p>Though we end up <em>considering</em> significantly more than <code class="docutils literal notranslate"><span class="pre">num_beams</span></code> outputs, we reduce them down to <code class="docutils literal notranslate"><span class="pre">num_beams</span></code> at the end of the step. We can’t just keep branching out, then the number of <code class="docutils literal notranslate"><span class="pre">beams</span></code> we’d have to keep track of would be <span class="math notranslate nohighlight">\(beams^{n}\)</span> for <span class="math notranslate nohighlight">\(n\)</span> steps, which becomes very large very quickly (<span class="math notranslate nohighlight">\(10\)</span> beams after <span class="math notranslate nohighlight">\(10\)</span> steps is <span class="math notranslate nohighlight">\(10,000,000,000\)</span> beams!).</p>
+<p>For the rest of the generation, we repeat the above step until the ending criteria has been met, like generating the <code class="docutils literal notranslate"><span class="pre">&lt;eos&gt;</span></code> token or reaching <code class="docutils literal notranslate"><span class="pre">max_length</span></code>, for example. Branch out, rank, reduce, and repeat.</p>
+</section>
+<section id="constrained-beam-search">
+<h2><strong>Constrained Beam Search</strong><a class="headerlink" href="#constrained-beam-search" title="Permalink to this heading">#</a></h2>
+<p>Constrained beam search attempts to fulfill the constraints by <em>injecting</em> the desired tokens at every step of the generation.</p>
+<p>Let’s say that we’re trying to force the phrase <code class="docutils literal notranslate"><span class="pre">&quot;is</span> <span class="pre">fast&quot;</span></code> in the generated output.</p>
+<p>In the traditional beam search setting, we find the top <code class="docutils literal notranslate"><span class="pre">k</span></code> most probable next tokens at each branch and append them for consideration. In the constrained setting we actually do the same, but also append the tokens that will take us <em>closer to fulfilling our constraints</em>. Here’s a demonstration:</p>
+<p><img alt="Constrained Beam Search Step 1" src="https://raw.githubusercontent.com/cwkeam/scientific-images/main/cbeam_1.jpg" /></p>
+<p>On top of the usual high-probability next tokens like <code class="docutils literal notranslate"><span class="pre">&quot;dog&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;nice&quot;</span></code>, we force the token <code class="docutils literal notranslate"><span class="pre">&quot;is&quot;</span></code> in order to get us closer to fulfilling our constraint of <code class="docutils literal notranslate"><span class="pre">&quot;is</span> <span class="pre">fast&quot;</span></code>.</p>
+<p>For the next step, the branched-out candidates below are mostly the same as that of traditional beam search. But like the above example, constrained beam search adds onto the existing candidates by forcing the constraints at each new branch:</p>
+<p><img alt="Constrained Beam Search Step 2" src="https://raw.githubusercontent.com/cwkeam/scientific-images/main/cbeam_2.jpg" /></p>
+<section id="banks">
+<h3><strong>Banks</strong><a class="headerlink" href="#banks" title="Permalink to this heading">#</a></h3>
+<p>Before we talk about the next step, we need to think about the resulting undesirable behavior we can see in the above step.</p>
+<p>The problem with naively just forcing the desired phrase <code class="docutils literal notranslate"><span class="pre">&quot;is</span> <span class="pre">fast&quot;</span></code> in the output is that, most of the time, you’d end up with nonsensical outputs like <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">is</span> <span class="pre">fast&quot;</span></code> above. This is actually what makes this a nontrivial problem to solve. A deeper discussion about the complexities of solving this problem can be found in the <a class="reference external" href="https://github.com/huggingface/transformers/issues/14081#issuecomment-1004479944">original feature request issue</a> that was raised in <code class="docutils literal notranslate"><span class="pre">huggingface/transformers</span></code>.</p>
+<p>Banks solve this problem by creating a <em>balance</em> between fulfilling the constraints and creating sensible output.</p>
+<p>Bank <span class="math notranslate nohighlight">\(n\)</span> refers to the <em><strong>list of beams that have made <span class="math notranslate nohighlight">\(n\)</span> steps progress in fulfilling the constraints</strong></em>. After sorting all the possible beams into their respective banks, we do a round-robin selection. With the above example, we’d select the most probable output from Bank 2, then most probable from Bank 1, one from Bank 0, the second most probable from Bank 2, the second most probable from Bank 1, and so forth. Since we’re using <code class="docutils literal notranslate"><span class="pre">num_beams=3</span></code>, we just do the above process three times to end up with <code class="docutils literal notranslate"><span class="pre">[&quot;The</span> <span class="pre">is</span> <span class="pre">fast&quot;,</span> <span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">is&quot;,</span> <span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">and&quot;]</span></code>.</p>
+<p>This way, even though we’re <em>forcing</em> the model to consider the branch where we’ve manually appended the desired token, we still keep track of other high-probable sequences that probably make more sense. Even though <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">is</span> <span class="pre">fast&quot;</span></code> fulfills our constraint completely, it’s not a very sensible phrase. Luckily, we have <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">is&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">and&quot;</span></code> to work with in future steps, which hopefully will lead to more sensible outputs later on.</p>
+<p>This behavior is demonstrated in the third step of the above example:</p>
+<p><img alt="Constrained Beam Search Step 3" src="https://raw.githubusercontent.com/cwkeam/scientific-images/main/cbeam_3.jpg" /></p>
+<p>Notice how <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">is</span> <span class="pre">fast&quot;</span></code> doesn’t require any manual appending of constraint tokens since it’s already fulfilled (i.e. already contains the phrase <code class="docutils literal notranslate"><span class="pre">&quot;is</span> <span class="pre">fast&quot;</span></code>). Also notice how beams like <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">is</span> <span class="pre">slow&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">is</span> <span class="pre">mad&quot;</span></code> are actually in Bank 0, since, although it includes the token <code class="docutils literal notranslate"><span class="pre">&quot;is&quot;</span></code>, it must restart from the beginning in order to generate <code class="docutils literal notranslate"><span class="pre">&quot;is</span> <span class="pre">fast&quot;</span></code>. By appending something like <code class="docutils literal notranslate"><span class="pre">&quot;slow&quot;</span></code> after <code class="docutils literal notranslate"><span class="pre">&quot;is&quot;</span></code>, it has effectively <em>reset its progress</em>.</p>
+<p>And finally notice how we ended up at a sensible output that contains our constraint phrase: <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">dog</span> <span class="pre">is</span> <span class="pre">fast&quot;</span></code>!</p>
+<p>We were worried in the beginning because just blindly appending the desired tokens led to nonsensicle phrases like <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">is</span> <span class="pre">fast&quot;</span></code>. However, with the use of round-robin selection from banks, we implicitly ended up getting rid of nonsensical outputs in preference for the more sensible outputs.</p>
+</section>
+</section>
+<section id="more-about-constraint-classes-and-custom-constraints">
+<h2><strong>More About <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> Classes and Custom Constraints</strong><a class="headerlink" href="#more-about-constraint-classes-and-custom-constraints" title="Permalink to this heading">#</a></h2>
+<p>The main takeaway from the explanation can be summarized as the following. At every step, we keep pestering the model to consider the tokens that fulfill our constraints, all the while keeping track of beams that don’t, until we end up with reasonably high probability sequences that contain our desired phrases.</p>
+<p>So a principled way to design this implementation was to represent each constraint as a <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> object, whose purpose was to keep track of its progress and tell the beam search which tokens to generate next. Although we have provided the keyword argument <code class="docutils literal notranslate"><span class="pre">force_words_ids</span></code> for <code class="docutils literal notranslate"><span class="pre">model.generate()</span></code>, the following is what actually happens in the back-end:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">,</span> <span class="n">PhrasalConstraint</span>
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
+
+<span class="n">encoder_input_str</span> <span class="o">=</span> <span class="s2">&quot;translate English to German: How old are you?&quot;</span>
+
+<span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">PhrasalConstraint</span><span class="p">(</span>
+        <span class="n">tokenizer</span><span class="p">(</span><span class="s2">&quot;Sie&quot;</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+    <span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">encoder_input_str</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
+
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">input_ids</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="n">constraints</span><span class="p">,</span>
+    <span class="n">num_beams</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">no_repeat_ngram_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">remove_invalid_values</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Output:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output:
+----------------------------------------------------------------------------------------------------
+Wie alt sind Sie?
+</pre></div>
+</div>
+</div>
+</div>
+<p>In order to design your own unique constraints, you can define one yourself and input it into the <code class="docutils literal notranslate"><span class="pre">constraints</span></code> keyword argument. You just have to create a sub-class of the <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> abstract interface class and follow its requirements. More information about this can be found in the definition of <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> found <a class="reference external" href="https://github.com/huggingface/transformers/blob/master/src/transformers/generation_beam_constraints.py">here</a>.</p>
+<p>Some unique ideas (not yet implemented; maybe you can give it a try!) include constraints like <code class="docutils literal notranslate"><span class="pre">OrderedConstraints</span></code>, <code class="docutils literal notranslate"><span class="pre">TemplateConstraints</span></code> that may be added further down the line. Currently, the generation is fulfilled by including the sequences, wherever in the output. For example, a previous example had one sequence with scared -&gt; screaming and the other with screamed -&gt; scared. <code class="docutils literal notranslate"><span class="pre">OrderedConstraints</span></code> could allow the user to specify the order in which these constraints are fulfilled.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TemplateConstraints</span></code> could allow for a more niche use of the feature, where the objective can be something like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">starting_text</span> <span class="o">=</span> <span class="s2">&quot;The woman&quot;</span>
+<span class="n">template</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;the&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;School of&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;in&quot;</span><span class="p">]</span>
+
+<span class="n">possible_outputs</span> <span class="o">==</span> <span class="p">[</span>
+   <span class="s2">&quot;The woman attended the Ross School of Business in Michigan.&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;The woman was the administrator for the Harvard School of Business in MA.&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">starting_text</span> <span class="o">=</span> <span class="s2">&quot;The woman&quot;</span>
+<span class="n">template</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;the&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;University&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;in&quot;</span><span class="p">]</span>
+
+<span class="n">possible_outputs</span> <span class="o">==</span> <span class="p">[</span>
+   <span class="s2">&quot;The woman attended the Carnegie Mellon University in Pittsburgh.&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">impossible_outputs</span> <span class="o">==</span> <span class="p">[</span>
+  <span class="s2">&quot;The woman attended the Harvard University in MA.&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>or if the user does not care about the number of tokens that can go in between two words, then one can just use <code class="docutils literal notranslate"><span class="pre">OrderedConstraint</span></code>.</p>
+</section>
+<section id="conclusion">
+<h2><strong>Conclusion</strong><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<p>Constrained beam search gives us a flexible means to inject external knowledge and requirements into text generation. Previously, there was no easy way to tell the model to 1. include a list of sequences where 2. some of which are optional and some are not, such that 3. they’re generated <em>somewhere</em> in the sequence at reasonable respective positions. Now, with a mix of different subclasses of <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> objects, we can have full control over our generation!</p>
+<p>This new feature is based mainly on the following papers:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/1612.00576">Guided Open Vocabulary Image Captioning with Constrained Beam Search</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/1804.06609">Fast Lexically Constrained Decoding with Dynamic Beam Allocation for Neural Machine Translation</a></p></li>
+<li><p><a class="reference external" href="https://aclanthology.org/N19-1090/">Improved Lexically Constrained Decoding for Translation and Monolingual Rewriting</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/pdf/2107.09846.pdf">Guided Generation of Cause and Effect</a></p></li>
+</ul>
+<p>Many new research papers recently, like the ones above, are exploring ways of using external knowledge (e.g. KGs, KBs) to guide the outputs of large deep learning models. Hopefully this constrained beam search feature becomes another effective way to achieve this purpose.</p>
+<p>Thanks to everybody that gave guidance for this feature contribution: Patrick von Platen for being involved from the <a class="reference external" href="https://github.com/huggingface/transformers/issues/14081">initial issue</a> to the <a class="reference external" href="https://github.com/huggingface/transformers/pull/15761">final PR</a>, and Narsil Patry, for providing detailed feedback on the code.</p>
+<p><em>Thumbnail of this post uses an icon with the attribution: <a href="https://www.flaticon.com/free-icons/shorthand" title="shorthand icons">Shorthand icons created by Freepik - Flaticon</a></em></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "HTW-ALADIN/kim",
+            ref: "source",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/code_examples"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction"><strong>Introduction</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-it-s-difficult"><strong>Why It’s Difficult</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-forcing-a-word"><strong>Example 1: Forcing a Word</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-beam-search"><strong>Traditional Beam Search</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-constrained-beam-search"><strong>With Constrained Beam Search</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-disjunctive-constraints"><strong>Example 2: Disjunctive Constraints</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><strong>Traditional Beam search</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constrained-beam-search"><strong>Constrained Beam Search</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#banks"><strong>Banks</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-about-constraint-classes-and-custom-constraints"><strong>More About <code class="docutils literal notranslate"><span class="pre">Constraint</span></code> Classes and Custom Constraints</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion"><strong>Conclusion</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Oleg Bissing, Paul Christ, Torsten Munkelt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
