@@ -68,6 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://HTW-ALADIN.github.io/kim/chapters/code_examples/Generating_Piano_Music_with_Transformer.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="riffusion colab demo" href="riffusion.html" />
+    <link rel="prev" title="Guiding Text Generation with Constrained Beam Search in 🤗 Transformers" href="53_constrained_beam_search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,7 +154,13 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Code Examples</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="53_constrained_beam_search.html">Guiding Text Generation with Constrained Beam Search in 🤗 Transformers</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Generating Piano Music with Transformer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="riffusion.html">riffusion colab demo</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -481,25 +489,32 @@ document.write(`
 ?25l     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.0/7.3 MB</span> <span class=" -Color -Color-Red">?</span> eta <span class=" -Color -Color-Cyan">-:--:--</span>
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.1/7.3 MB</span> <span class=" -Color -Color-Red">4.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:02</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.1/7.3 MB</span> <span class=" -Color -Color-Red">1.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:05</span>
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.6/7.3 MB</span> <span class=" -Color -Color-Red">8.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
-     ━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.2/7.3 MB</span> <span class=" -Color -Color-Red">11.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.3/7.3 MB</span> <span class=" -Color -Color-Red">4.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:02</span>
+     ━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">0.7/7.3 MB</span> <span class=" -Color -Color-Red">6.7 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.0/7.3 MB</span> <span class=" -Color -Color-Red">14.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.1/7.3 MB</span> <span class=" -Color -Color-Red">8.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">3.0/7.3 MB</span> <span class=" -Color -Color-Red">17.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">4.4/7.3 MB</span> <span class=" -Color -Color-Red">21.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.7/7.3 MB</span> <span class=" -Color -Color-Red">9.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+     ━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.3/7.3 MB</span> <span class=" -Color -Color-Red">10.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━ <span class=" -Color -Color-Green">6.4/7.3 MB</span> <span class=" -Color -Color-Red">26.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">3.1/7.3 MB</span> <span class=" -Color -Color-Red">12.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ <span class=" -Color -Color-Green">7.3/7.3 MB</span> <span class=" -Color -Color-Red">28.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">7.3/7.3 MB</span> <span class=" -Color -Color-Red">26.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━╸━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">4.0/7.3 MB</span> <span class=" -Color -Color-Red">14.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━ <span class=" -Color -Color-Green">5.1/7.3 MB</span> <span class=" -Color -Color-Red">16.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╺━━━━ <span class=" -Color -Color-Green">6.4/7.3 MB</span> <span class=" -Color -Color-Red">18.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ <span class=" -Color -Color-Green">7.3/7.3 MB</span> <span class=" -Color -Color-Red">19.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:01</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">7.3/7.3 MB</span> <span class=" -Color -Color-Red">17.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25h
 </pre></div>
 </div>
@@ -521,10 +536,16 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> \
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> |
+</pre></div>
+</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> done
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>?25h  Getting requirements to build wheel ... ?25l-
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> \
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> done
@@ -549,55 +570,6 @@ document.write(`
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> |
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> /
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> -
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> \
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> done
-?25hBuilding wheels for collected packages: numpy
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Building wheel for numpy (pyproject.toml) ... ?25l-
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> \
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> |
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> /
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> -
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> \
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> |
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> /
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> -
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> \
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> |
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> /
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>^C
@@ -1101,6 +1073,24 @@ document.write(`
                 <footer class="bd-footer-article">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="53_constrained_beam_search.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Guiding Text Generation with Constrained Beam Search in 🤗 Transformers</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="riffusion.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">riffusion colab demo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
