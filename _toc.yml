@@ -1,10 +1,17 @@
 format: jb-book
 
-root: chapters/model_resources
+root: chapters/Overview
 
 parts:
-  - caption: Code Examples
+  - caption: Workshopinhalt
     chapters:
-      - file: chapters/code_examples/53_constrained_beam_search
-      - file: chapters/code_examples/Generating_Piano_Music_with_Transformer
-      - file: chapters/code_examples/riffusion
+      - file: chapters/workshop_content/generate_backstory
+      - file: chapters/workshop_content/generate_avatar
+      - file: chapters/workshop_content/generate_music
+      - file: chapters/workshop_content/generate_speech
+      - file: chapters/workshop_content/fuse_generated_media
+  # - caption: Code Examples
+  #   chapters:
+  #     - file: chapters/code_examples/53_constrained_beam_search
+  #     - file: chapters/code_examples/Generating_Piano_Music_with_Transformer
+  #     - file: chapters/code_examples/riffusion
