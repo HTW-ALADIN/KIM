@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -39,8 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -70,8 +70,6 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://HTW-ALADIN.github.io/kim/chapters/code_examples/53_constrained_beam_search.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Generating Piano Music with Transformer" href="Generating_Piano_Music_with_Transformer.html" />
-    <link rel="prev" title="Model Resources" href="../model_resources.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -137,7 +135,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item">
   
 
-<a class="navbar-brand logo" href="../model_resources.html">
+<a class="navbar-brand logo" href="../Overview.html">
   
   
   
@@ -151,16 +149,17 @@ const thebe_selector_output = ".output, .cell_output"
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../model_resources.html">
-                    Model Resources
+                <a class="reference internal" href="../Overview.html">
+                    Workshopablauf
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Code Examples</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Guiding Text Generation with Constrained Beam Search in 🤗 Transformers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Generating_Piano_Music_with_Transformer.html">Generating Piano Music with Transformer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="riffusion.html">riffusion colab demo</a></li>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Workshopinhalt</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../workshop_content/generate_backstory.html">Generiere die Hintergrundgeschichte deiner Superheldin!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workshop_content/generate_avatar.html">Generiere den Avatar deiner Superheldin!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workshop_content/generate_music.html">Generiere den Titelsong zu deiner Superheldin!</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../workshop_content/generate_speech.html">Generiere die Narration deiner Superheldinnengeschichte mit deiner Stimme!</a></li>
 </ul>
 
     </div>
@@ -500,8 +499,9 @@ you’d say in a formal setting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">22.3.1</span> -&gt; <span class=" -Color -Color-Green">23.0.1</span>
-<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>^C
+<span class=" -Color -Color-Red">ERROR: Operation cancelled by user</span>
+
 </pre></div>
 </div>
 </div>
@@ -531,69 +531,9 @@ you’d say in a formal setting.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-None of PyTorch, TensorFlow &gt;= 2.0, or Flax have been found. Models won&#39;t be available and only tokenizers, configuration and file/data utilities can be used.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json:   0%|          | 0.00/1.21k [00:00&lt;?, ?B/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)lve/main/config.json: 100%|██████████| 1.21k/1.21k [00:00&lt;00:00, 615kB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)ve/main/spiece.model:   0%|          | 0.00/792k [00:00&lt;?, ?B/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)ve/main/spiece.model: 100%|██████████| 792k/792k [00:00&lt;00:00, 24.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)/main/tokenizer.json:   0%|          | 0.00/1.39M [00:00&lt;?, ?B/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading (…)/main/tokenizer.json: 100%|██████████| 1.39M/1.39M [00:00&lt;00:00, 43.1MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/transformers/models/t5/tokenization_t5_fast.py:155: FutureWarning: This tokenizer was incorrectly instantiated with a model max length of 512 which will be corrected in Transformers v5.
-For now, this behavior is kept to avoid breaking backwards compatibility when padding/encoding with `truncation is True`.
-- Be aware that you SHOULD NOT rely on t5-base automatically truncating your input to 512 when padding/encoding.
-- If you want to encode/pad to sequences longer than 512 you can either instantiate this tokenizer with `model_max_length` or pass `max_length` when encoding/padding.
-- To avoid this warning, please instantiate this tokenizer with `model_max_length` set to your preferred value.
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ImportError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-base&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">encoder_input_str</span> <span class="o">=</span> <span class="s2">&quot;translate English to German: How old are you?&quot;</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">encoder_input_str</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">input_ids</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1065,</span> in <span class="ni">DummyObject.__getattribute__</span><span class="nt">(cls, key)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1063</span> <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;_from_config&quot;</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1064</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1065</span> <span class="n">requires_backends</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_backends</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.11.2/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1053,</span> in <span class="ni">requires_backends</span><span class="nt">(obj, backends)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1051</span> <span class="n">failed</span> <span class="o">=</span> <span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">available</span><span class="p">,</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">checks</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">available</span><span class="p">()]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1052</span> <span class="k">if</span> <span class="n">failed</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1053</span>     <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">failed</span><span class="p">))</span>
-
-<span class="ne">ImportError</span>: 
-<span class="n">AutoModelForSeq2SeqLM</span> <span class="n">requires</span> <span class="n">the</span> <span class="n">PyTorch</span> <span class="n">library</span> <span class="n">but</span> <span class="n">it</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">found</span> <span class="ow">in</span> <span class="n">your</span> <span class="n">environment</span><span class="o">.</span> <span class="n">Checkout</span> <span class="n">the</span> <span class="n">instructions</span> <span class="n">on</span> <span class="n">the</span>
-<span class="n">installation</span> <span class="n">page</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pytorch</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">get</span><span class="o">-</span><span class="n">started</span><span class="o">/</span><span class="n">locally</span><span class="o">/</span> <span class="ow">and</span> <span class="n">follow</span> <span class="n">the</span> <span class="n">ones</span> <span class="n">that</span> <span class="n">match</span> <span class="n">your</span> <span class="n">environment</span><span class="o">.</span>
-<span class="n">Please</span> <span class="n">note</span> <span class="n">that</span> <span class="n">you</span> <span class="n">may</span> <span class="n">need</span> <span class="n">to</span> <span class="n">restart</span> <span class="n">your</span> <span class="n">runtime</span> <span class="n">after</span> <span class="n">installation</span><span class="o">.</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output:
+----------------------------------------------------------------------------------------------------
+Wie alt bist du?
 </pre></div>
 </div>
 </div>
@@ -845,27 +785,15 @@ Wie alt sind Sie?
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../model_resources.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Model Resources</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="Generating_Piano_Music_with_Transformer.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Generating Piano Music with Transformer</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -905,7 +833,7 @@ Wie alt sind Sie?
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -928,7 +856,7 @@ By Oleg Bissing, Paul Christ, Torsten Munkelt
     
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -937,8 +865,8 @@ By Oleg Bissing, Paul Christ, Torsten Munkelt
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
   </footer>
