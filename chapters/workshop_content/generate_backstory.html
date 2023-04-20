@@ -443,6 +443,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#und-wie-funktioniert-das">Und wie funktioniert das..?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wie-sage-ich-dem-modell-was-ich-will">Wie sage ich dem Modell was ich will?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sei-dabei-so-genau-wie-moglich-und-versuche-zu-verstehen-wie-dein-kommunikationspartner-denkt">Sei dabei so genau wie möglich und versuche zu verstehen wie dein Kommunikationspartner denkt.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sonst-kommt-leider-quatsch-raus">Sonst kommt leider Quatsch raus.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jetzt-bist-du-an-der-reihe">Jetzt bist du an der Reihe!</a></li>
 </ul>
             </nav>
@@ -486,7 +487,9 @@ Das heißt, wenn wir dem Modell einen Satzanfang geben, wird es versuchen, den S
 </pre></div>
 </div>
 <p>Du kannst dem Sprachmodell aber auch eine konkrete Anweisung geben was es tun soll.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Prompt</span><span class="p">:</span> <span class="n">Erstell</span> <span class="n">mir</span> <span class="n">ein</span> <span class="n">Rezept</span> <span class="n">für</span> <span class="n">einen</span> <span class="n">leckeren</span> <span class="n">Obstkuchen</span> <span class="n">ohne</span> <span class="n">künstlichen</span> <span class="n">Zuckerzusatz</span><span class="o">.</span> <span class="n">Die</span> <span class="n">Früchte</span> <span class="n">sollen</span> <span class="n">regional</span> <span class="n">und</span> <span class="n">saisonal</span> <span class="n">sein</span><span class="o">.</span> <span class="n">Jetzt</span> <span class="n">ist</span> <span class="n">gerade</span> <span class="n">Frühling</span> <span class="n">und</span> <span class="n">wir</span> <span class="n">sind</span> <span class="n">im</span> <span class="n">Osten</span> <span class="n">von</span> <span class="n">Deutschland</span><span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Prompt</span><span class="p">:</span> <span class="n">Erstell</span> <span class="n">mir</span> <span class="n">ein</span> <span class="n">Rezept</span> <span class="n">für</span> <span class="n">einen</span> <span class="n">leckeren</span> <span class="n">Obstkuchen</span> <span class="n">ohne</span> <span class="n">künstlichen</span> <span class="n">Zuckerzusatz</span><span class="o">.</span> 
+<span class="n">Die</span> <span class="n">Früchte</span> <span class="n">sollen</span> <span class="n">regional</span> <span class="n">und</span> <span class="n">saisonal</span> <span class="n">sein</span><span class="o">.</span> 
+<span class="n">Jetzt</span> <span class="n">ist</span> <span class="n">gerade</span> <span class="n">Frühling</span> <span class="n">und</span> <span class="n">wir</span> <span class="n">sind</span> <span class="n">im</span> <span class="n">Osten</span> <span class="n">von</span> <span class="n">Deutschland</span><span class="o">.</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Output: Klar, ich helfe gerne! Hier ist ein Rezept für einen leckeren Obstkuchen ohne künstlichen Zuckerzusatz, der mit saisonalen Früchten aus der Region zubereitet wird:
@@ -528,7 +531,17 @@ Guten Appetit!
 <p><span class="caption-number">Fig. 3 </span><span class="caption-text">Fehlkommunikation bei der Anforderungsbeschreibung.</span><a class="headerlink" href="#requirements-fig" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><strong>Sonst kommt leider Quatsch raus.</strong></p>
+</section>
+<section id="sonst-kommt-leider-quatsch-raus">
+<h2>Sonst kommt leider Quatsch raus.<a class="headerlink" href="#sonst-kommt-leider-quatsch-raus" title="Permalink to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Prompt: Warum ist es eine schlechte Idee sich mit Tomatensaft zu duschen?
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Output</span><span class="p">:</span> <span class="n">Es</span> <span class="n">ist</span> <span class="n">keine</span> <span class="n">gute</span> <span class="n">Idee</span><span class="p">,</span> <span class="n">sich</span> <span class="n">mit</span> <span class="n">Tomatensaft</span> <span class="n">zu</span> <span class="n">duschen</span><span class="p">,</span> <span class="n">da</span> <span class="n">es</span> <span class="ow">in</span> <span class="n">der</span> <span class="n">Regel</span> <span class="n">zu</span> <span class="n">Hautreizungen</span> <span class="n">und</span> <span class="n">einem</span> <span class="n">unangenehmen</span> <span class="n">Geruch</span> <span class="n">führen</span> <span class="n">kann</span><span class="o">.</span> 
+<span class="n">Wenn</span> <span class="n">du</span> <span class="n">das</span> <span class="n">Gefühl</span> <span class="n">hast</span><span class="p">,</span> <span class="n">dass</span> <span class="n">du</span> <span class="n">Tomatensaft</span> <span class="n">brauchst</span><span class="p">,</span> <span class="n">um</span> <span class="n">Gerüche</span> <span class="n">von</span> <span class="n">deiner</span> <span class="n">Haut</span> <span class="n">zu</span> <span class="n">entfernen</span> <span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">B</span><span class="o">.</span> <span class="n">nach</span> <span class="n">einem</span> <span class="n">Kontakt</span> <span class="n">mit</span> <span class="n">einem</span> <span class="n">Stinktier</span><span class="p">),</span> 
+<span class="n">dann</span> <span class="n">ist</span> <span class="n">es</span> <span class="n">am</span> <span class="n">besten</span><span class="p">,</span> <span class="n">sich</span> <span class="n">mit</span> <span class="n">herkömmlicher</span> <span class="n">Seife</span> <span class="n">und</span> <span class="n">Wasser</span> <span class="n">zu</span> <span class="n">waschen</span><span class="o">.</span>
+</pre></div>
+</div>
 </section>
 <section id="jetzt-bist-du-an-der-reihe">
 <h2>Jetzt bist du an der Reihe!<a class="headerlink" href="#jetzt-bist-du-an-der-reihe" title="Permalink to this heading">#</a></h2>
@@ -607,6 +620,7 @@ Guten Appetit!
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#und-wie-funktioniert-das">Und wie funktioniert das..?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wie-sage-ich-dem-modell-was-ich-will">Wie sage ich dem Modell was ich will?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sei-dabei-so-genau-wie-moglich-und-versuche-zu-verstehen-wie-dein-kommunikationspartner-denkt">Sei dabei so genau wie möglich und versuche zu verstehen wie dein Kommunikationspartner denkt.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sonst-kommt-leider-quatsch-raus">Sonst kommt leider Quatsch raus.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jetzt-bist-du-an-der-reihe">Jetzt bist du an der Reihe!</a></li>
 </ul>
   </nav></div>
