@@ -5,6 +5,7 @@ root: chapters/Overview
 parts:
   - caption: Workshopinhalt
     chapters:
+      - file: chapters/intro
       - file: chapters/workshop_content/generate_backstory
       - file: chapters/workshop_content/generate_avatar
       - file: chapters/workshop_content/generate_music
