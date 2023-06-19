@@ -1,23 +1,20 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/nbclient/client.py", line 1204, in execute
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/nbclient/util.py", line 84, in wrapped
-    return just_run(coro(*args, **kwargs))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/nbclient/util.py", line 62, in just_run
-    return loop.run_until_complete(coro)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
     return future.result()
            ^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/nbclient/client.py", line 663, in async_execute
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/nbclient/client.py", line 965, in async_execute_cell
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+  File "/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
@@ -42,6 +39,40 @@ print("Output:\n" + 100 * '-')
 print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ------------------
 
+----- stderr -----
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+----- stderr -----
+Downloading (…)lve/main/config.json:   0%|          | 0.00/1.21k [00:00<?, ?B/s]
+----- stderr -----
+Downloading (…)lve/main/config.json: 100%|██████████| 1.21k/1.21k [00:00<00:00, 5.34MB/s]
+----- stderr -----
+
+----- stderr -----
+Downloading (…)ve/main/spiece.model:   0%|          | 0.00/792k [00:00<?, ?B/s]
+----- stderr -----
+Downloading (…)ve/main/spiece.model: 100%|██████████| 792k/792k [00:00<00:00, 3.34MB/s]
+----- stderr -----
+Downloading (…)ve/main/spiece.model: 100%|██████████| 792k/792k [00:00<00:00, 3.29MB/s]
+----- stderr -----
+
+----- stderr -----
+Downloading (…)/main/tokenizer.json:   0%|          | 0.00/1.39M [00:00<?, ?B/s]
+----- stderr -----
+Downloading (…)/main/tokenizer.json: 100%|██████████| 1.39M/1.39M [00:00<00:00, 4.62MB/s]
+----- stderr -----
+Downloading (…)/main/tokenizer.json: 100%|██████████| 1.39M/1.39M [00:00<00:00, 4.58MB/s]
+----- stderr -----
+
+/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/transformers/models/t5/tokenization_t5_fast.py:155: FutureWarning: This tokenizer was incorrectly instantiated with a model max length of 512 which will be corrected in Transformers v5.
+For now, this behavior is kept to avoid breaking backwards compatibility when padding/encoding with `truncation is True`.
+- Be aware that you SHOULD NOT rely on t5-base automatically truncating your input to 512 when padding/encoding.
+- If you want to encode/pad to sequences longer than 512 you can either instantiate this tokenizer with `model_max_length` or pass `max_length` when encoding/padding.
+- To avoid this warning, please instantiate this tokenizer with `model_max_length` set to your preferred value.
+  warnings.warn(
+------------------
+
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mImportError[0m                               Traceback (most recent call last)
 Cell [0;32mIn[2], line 4[0m
@@ -51,22 +82,17 @@ Cell [0;32mIn[2], line 4[0m
 [1;32m      6[0m encoder_input_str [38;5;241m=[39m [38;5;124m"[39m[38;5;124mtranslate English to German: How old are you?[39m[38;5;124m"[39m
 [1;32m      8[0m input_ids [38;5;241m=[39m tokenizer(encoder_input_str, return_tensors[38;5;241m=[39m[38;5;124m"[39m[38;5;124mpt[39m[38;5;124m"[39m)[38;5;241m.[39minput_ids
 
-File [0;32m/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1093[0m, in [0;36mDummyObject.__getattribute__[0;34m(cls, key)[0m
-[1;32m   1091[0m [38;5;28;01mif[39;00m key[38;5;241m.[39mstartswith([38;5;124m"[39m[38;5;124m_[39m[38;5;124m"[39m) [38;5;129;01mand[39;00m key [38;5;241m!=[39m [38;5;124m"[39m[38;5;124m_from_config[39m[38;5;124m"[39m:
-[1;32m   1092[0m     [38;5;28;01mreturn[39;00m [38;5;28msuper[39m()[38;5;241m.[39m[38;5;21m__getattribute__[39m(key)
-[0;32m-> 1093[0m [43mrequires_backends[49m[43m([49m[38;5;28;43mcls[39;49m[43m,[49m[43m [49m[38;5;28;43mcls[39;49m[38;5;241;43m.[39;49m[43m_backends[49m[43m)[49m
+File [0;32m/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1022[0m, in [0;36mDummyObject.__getattribute__[0;34m(cls, key)[0m
+[1;32m   1020[0m [38;5;28;01mif[39;00m key[38;5;241m.[39mstartswith([38;5;124m"[39m[38;5;124m_[39m[38;5;124m"[39m) [38;5;129;01mand[39;00m key [38;5;241m!=[39m [38;5;124m"[39m[38;5;124m_from_config[39m[38;5;124m"[39m:
+[1;32m   1021[0m     [38;5;28;01mreturn[39;00m [38;5;28msuper[39m()[38;5;241m.[39m[38;5;21m__getattribute__[39m(key)
+[0;32m-> 1022[0m [43mrequires_backends[49m[43m([49m[38;5;28;43mcls[39;49m[43m,[49m[43m [49m[38;5;28;43mcls[39;49m[38;5;241;43m.[39;49m[43m_backends[49m[43m)[49m
 
-File [0;32m/opt/hostedtoolcache/Python/3.11.3/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1081[0m, in [0;36mrequires_backends[0;34m(obj, backends)[0m
-[1;32m   1079[0m failed [38;5;241m=[39m [msg[38;5;241m.[39mformat(name) [38;5;28;01mfor[39;00m available, msg [38;5;129;01min[39;00m checks [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m available()]
-[1;32m   1080[0m [38;5;28;01mif[39;00m failed:
-[0;32m-> 1081[0m     [38;5;28;01mraise[39;00m [38;5;167;01mImportError[39;00m([38;5;124m"[39m[38;5;124m"[39m[38;5;241m.[39mjoin(failed))
+File [0;32m/opt/hostedtoolcache/Python/3.11.4/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py:1010[0m, in [0;36mrequires_backends[0;34m(obj, backends)[0m
+[1;32m   1008[0m failed [38;5;241m=[39m [msg[38;5;241m.[39mformat(name) [38;5;28;01mfor[39;00m available, msg [38;5;129;01min[39;00m checks [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m available()]
+[1;32m   1009[0m [38;5;28;01mif[39;00m failed:
+[0;32m-> 1010[0m     [38;5;28;01mraise[39;00m [38;5;167;01mImportError[39;00m([38;5;124m"[39m[38;5;124m"[39m[38;5;241m.[39mjoin(failed))
 
 [0;31mImportError[0m: 
-AutoModelForSeq2SeqLM requires the PyTorch library but it was not found in your environment. Checkout the instructions on the
-installation page: https://pytorch.org/get-started/locally/ and follow the ones that match your environment.
-Please note that you may need to restart your runtime after installation.
-
-ImportError: 
 AutoModelForSeq2SeqLM requires the PyTorch library but it was not found in your environment. Checkout the instructions on the
 installation page: https://pytorch.org/get-started/locally/ and follow the ones that match your environment.
 Please note that you may need to restart your runtime after installation.
