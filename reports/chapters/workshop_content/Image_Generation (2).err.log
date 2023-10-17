@@ -1,0 +1,105 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 173, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.11.5/x64/lib/python3.11/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+#@title Installation der Softwarepakete und Auswahl des zu verwendenden Modells
+%%capture
+#                 Utility-tool for monitoring Nvidia-GPUs (debugging-purposes)
+!nvidia-smi
+#                 Library for Stable Diffusion modells
+!pip install diffusers
+# transformers:   Library for Transformer modells
+# scipy:          Library for highly optimised algorithms (scientific computing)
+# ftfy:           Library for fixing issues in Unicode-inputs (heuristic)
+# accelerate:     Library for abstracting various system hardware environments (local, cloud, single CPU, multi-GPU, TPU, etc...)
+!pip install transformers scipy ftfy accelerate
+
+#                 StableDiffusionPipeline can load the model and persist it in an object for future access
+from diffusers import StableDiffusionPipeline
+#                 Torch is the utilized "lowlevel" ML-Library
+import torch
+
+# model contains the name of the desired model to use
+model = "XpucT/Deliberate" # @param ["XpucT/Deliberate", "SG161222/Realistic_Vision_V2.0", "Lykon/DreamShaper", "Linaqruf/anything-v3.0", "Yntec/ElldrethsRetroMix_Diffusers", "darkstorm2150/Protogen_x5.8_Official_Release", "prompthero/openjourney-v4", "wavymulder/modelshoot"]
+
+# the model is loaded into the pipe-object with float16 precision
+pipe = StableDiffusionPipeline.from_pretrained(model, torch_dtype=torch.float16)
+
+# the modell uses GPU ("cuda" is the Nvidia-API)
+pipe = pipe.to("cuda")
+
+# Dependencies for prompt + image2image inpainting
+# utilize a second model for "editing" a generated picture more precisely
+from diffusers import StableDiffusionInstructPix2PixPipeline, EulerAncestralDiscreteScheduler
+model_id = "timbrooks/instruct-pix2pix"
+editing_pipe = StableDiffusionInstructPix2PixPipeline.from_pretrained(model_id, torch_dtype=torch.float16, revision="fp16", safety_checker=None)
+editing_pipe.to("cuda")
+editing_pipe.enable_attention_slicing()
+
+# Dependencies for prompt based mask prediction and prompt + mask inpainting
+! git lfs install
+! git clone https://github.com/timojl/clipseg
+! pip install diffusers -q
+! pip install transformers -q -UU ftfy gradio
+! pip install git+https://github.com/openai/CLIP.git -q
+
+%cd clipseg
+! ls
+
+import requests
+import cv2
+from models.clipseg import CLIPDensePredT
+from PIL import Image
+from torchvision import transforms
+from matplotlib import pyplot as plt
+
+from io import BytesIO
+
+from torch import autocast
+import requests
+import PIL
+from diffusers import StableDiffusionInpaintPipeline as StableDiffusionInpaintPipeline
+
+# load model for predicting the mask via text prompt
+model = CLIPDensePredT(version='ViT-B/16', reduce_dim=64)
+model.eval();
+
+# download model weights
+!wget https://owncloud.gwdg.de/index.php/s/ioHbRzFx6th32hn/download -O weights.zip
+!unzip -d weights -j weights.zip
+
+# non-strict, because we only stored decoder weights (not CLIP weights)
+model.load_state_dict(torch.load('/content/clipseg/weights/rd64-uni.pth', map_location=torch.device('cuda')), strict=False);
+
+device = "cuda"
+inpaint_pipe = StableDiffusionInpaintPipeline.from_pretrained(
+    "CompVis/stable-diffusion-v1-4",
+    revision="fp16",
+    torch_dtype=torch.float16
+).to(device)
+
+%cd ..
+------------------
+
+----- stderr -----
+UsageError: Line magic function `%%capture` not found.
+------------------
+
+
+

@@ -1,0 +1,917 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; KIM</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/justify.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/analytics.js"></script>
+    <script src="../../_static/analytics_gtag.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/workshop_content/coqui_XTTS_colab';</script>
+    <link rel="canonical" href="https://HTW-ALADIN.github.io/kim/chapters/workshop_content/coqui_XTTS_colab.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../Overview.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">KIM</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../Overview.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Anleitung</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../manual/zielstellung.html">Motivation und Zielstellung</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/glossar.html">Glossar</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Workshop Inhalte</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="colab_intro.html">Einleitung</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/HTW-ALADIN/kim/source?urlpath=tree/chapters/workshop_content/coqui_XTTS_colab.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/HTW-ALADIN/kim/blob/source/chapters/workshop_content/coqui_XTTS_colab.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/HTW-ALADIN/kim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HTW-ALADIN/kim/edit/source/chapters/workshop_content/coqui_XTTS_colab.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/HTW-ALADIN/kim/issues/new?title=Issue%20on%20page%20%2Fchapters/workshop_content/coqui_XTTS_colab.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/workshop_content/coqui_XTTS_colab.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;COQUI_TOS_AGREED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+<span class="o">%</span><span class="k">cd</span> /content
+<span class="o">!</span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>dev<span class="w"> </span>https://github.com/camenduru/xtts-hf
+<span class="o">%</span><span class="k">cd</span> /content/xtts-hf
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>gradio<span class="w"> </span>TTS
+<span class="o">!</span>wget<span class="w"> </span>https://huggingface.co/spaces/coqui/xtts/resolve/main/examples/female.wav<span class="w"> </span>-O<span class="w"> </span>/content/xtts-hf/examples/female.wav
+<span class="o">!</span>wget<span class="w"> </span>https://huggingface.co/spaces/coqui/xtts/resolve/main/examples/male.wav<span class="w"> </span>-O<span class="w"> </span>/content/xtts-hf/examples/male.wav
+<span class="o">!</span>python<span class="w"> </span>app.py
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Errno 2] No such file or directory: &#39;/content&#39;
+/home/runner/work/KIM/KIM/chapters/workshop_content
+Cloning into &#39;xtts-hf&#39;...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>remote: Enumerating objects: 98, done.
+remote: Counting objects:   1% (1/98)
+remote: Counting objects:   2% (2/98)
+remote: Counting objects:   3% (3/98)
+remote: Counting objects:   4% (4/98)
+remote: Counting objects:   5% (5/98)
+remote: Counting objects:   6% (6/98)
+remote: Counting objects:   7% (7/98)
+remote: Counting objects:   8% (8/98)
+remote: Counting objects:   9% (9/98)
+remote: Counting objects:  10% (10/98)
+remote: Counting objects:  11% (11/98)
+remote: Counting objects:  12% (12/98)
+remote: Counting objects:  13% (13/98)
+remote: Counting objects:  14% (14/98)
+remote: Counting objects:  15% (15/98)
+remote: Counting objects:  16% (16/98)
+remote: Counting objects:  17% (17/98)
+remote: Counting objects:  18% (18/98)
+remote: Counting objects:  19% (19/98)
+remote: Counting objects:  20% (20/98)
+remote: Counting objects:  21% (21/98)
+remote: Counting objects:  22% (22/98)
+remote: Counting objects:  23% (23/98)
+remote: Counting objects:  24% (24/98)
+remote: Counting objects:  25% (25/98)
+remote: Counting objects:  26% (26/98)
+remote: Counting objects:  27% (27/98)
+remote: Counting objects:  28% (28/98)
+remote: Counting objects:  29% (29/98)
+remote: Counting objects:  30% (30/98)
+remote: Counting objects:  31% (31/98)
+remote: Counting objects:  32% (32/98)
+remote: Counting objects:  33% (33/98)
+remote: Counting objects:  34% (34/98)
+remote: Counting objects:  35% (35/98)
+remote: Counting objects:  36% (36/98)
+remote: Counting objects:  37% (37/98)
+remote: Counting objects:  38% (38/98)
+remote: Counting objects:  39% (39/98)
+remote: Counting objects:  40% (40/98)
+remote: Counting objects:  41% (41/98)
+remote: Counting objects:  42% (42/98)
+remote: Counting objects:  43% (43/98)
+remote: Counting objects:  44% (44/98)
+remote: Counting objects:  45% (45/98)
+remote: Counting objects:  46% (46/98)
+remote: Counting objects:  47% (47/98)
+remote: Counting objects:  48% (48/98)
+remote: Counting objects:  50% (49/98)
+remote: Counting objects:  51% (50/98)
+remote: Counting objects:  52% (51/98)
+remote: Counting objects:  53% (52/98)
+remote: Counting objects:  54% (53/98)
+remote: Counting objects:  55% (54/98)
+remote: Counting objects:  56% (55/98)
+remote: Counting objects:  57% (56/98)
+remote: Counting objects:  58% (57/98)
+remote: Counting objects:  59% (58/98)
+remote: Counting objects:  60% (59/98)
+remote: Counting objects:  61% (60/98)
+remote: Counting objects:  62% (61/98)
+remote: Counting objects:  63% (62/98)
+remote: Counting objects:  64% (63/98)
+remote: Counting objects:  65% (64/98)
+remote: Counting objects:  66% (65/98)
+remote: Counting objects:  67% (66/98)
+remote: Counting objects:  68% (67/98)
+remote: Counting objects:  69% (68/98)
+remote: Counting objects:  70% (69/98)
+remote: Counting objects:  71% (70/98)
+remote: Counting objects:  72% (71/98)
+remote: Counting objects:  73% (72/98)
+remote: Counting objects:  74% (73/98)
+remote: Counting objects:  75% (74/98)
+remote: Counting objects:  76% (75/98)
+remote: Counting objects:  77% (76/98)
+remote: Counting objects:  78% (77/98)
+remote: Counting objects:  79% (78/98)
+remote: Counting objects:  80% (79/98)
+remote: Counting objects:  81% (80/98)
+remote: Counting objects:  82% (81/98)
+remote: Counting objects:  83% (82/98)
+remote: Counting objects:  84% (83/98)
+remote: Counting objects:  85% (84/98)
+remote: Counting objects:  86% (85/98)
+remote: Counting objects:  87% (86/98)
+remote: Counting objects:  88% (87/98)
+remote: Counting objects:  89% (88/98)
+remote: Counting objects:  90% (89/98)
+remote: Counting objects:  91% (90/98)
+remote: Counting objects:  92% (91/98)
+remote: Counting objects:  93% (92/98)
+remote: Counting objects:  94% (93/98)
+remote: Counting objects:  95% (94/98)
+remote: Counting objects:  96% (95/98)
+remote: Counting objects:  97% (96/98)
+remote: Counting objects:  98% (97/98)
+remote: Counting objects: 100% (98/98)
+remote: Counting objects: 100% (98/98), done.
+remote: Compressing objects:   1% (1/51)
+remote: Compressing objects:   3% (2/51)
+remote: Compressing objects:   5% (3/51)
+remote: Compressing objects:   7% (4/51)
+remote: Compressing objects:   9% (5/51)
+remote: Compressing objects:  11% (6/51)
+remote: Compressing objects:  13% (7/51)
+remote: Compressing objects:  15% (8/51)
+remote: Compressing objects:  17% (9/51)
+remote: Compressing objects:  19% (10/51)
+remote: Compressing objects:  21% (11/51)
+remote: Compressing objects:  23% (12/51)
+remote: Compressing objects:  25% (13/51)
+remote: Compressing objects:  27% (14/51)
+remote: Compressing objects:  29% (15/51)
+remote: Compressing objects:  31% (16/51)
+remote: Compressing objects:  33% (17/51)
+remote: Compressing objects:  35% (18/51)
+remote: Compressing objects:  37% (19/51)
+remote: Compressing objects:  39% (20/51)
+remote: Compressing objects:  41% (21/51)
+remote: Compressing objects:  43% (22/51)
+remote: Compressing objects:  45% (23/51)
+remote: Compressing objects:  47% (24/51)
+remote: Compressing objects:  49% (25/51)
+remote: Compressing objects:  50% (26/51)
+remote: Compressing objects:  52% (27/51)
+remote: Compressing objects:  54% (28/51)
+remote: Compressing objects:  56% (29/51)
+remote: Compressing objects:  58% (30/51)
+remote: Compressing objects:  60% (31/51)
+remote: Compressing objects:  62% (32/51)
+remote: Compressing objects:  64% (33/51)
+remote: Compressing objects:  66% (34/51)
+remote: Compressing objects:  68% (35/51)
+remote: Compressing objects:  70% (36/51)
+remote: Compressing objects:  72% (37/51)
+remote: Compressing objects:  74% (38/51)
+remote: Compressing objects:  76% (39/51)
+remote: Compressing objects:  78% (40/51)
+remote: Compressing objects:  80% (41/51)
+remote: Compressing objects:  82% (42/51)
+remote: Compressing objects:  84% (43/51)
+remote: Compressing objects:  86% (44/51)
+remote: Compressing objects:  88% (45/51)
+remote: Compressing objects:  90% (46/51)
+remote: Compressing objects:  92% (47/51)
+remote: Compressing objects:  94% (48/51)
+remote: Compressing objects:  96% (49/51)
+remote: Compressing objects:  98% (50/51)
+remote: Compressing objects: 100% (51/51)
+remote: Compressing objects: 100% (51/51), done.
+Receiving objects:   1% (1/98)
+Receiving objects:   2% (2/98)
+Receiving objects:   3% (3/98)
+Receiving objects:   4% (4/98)
+Receiving objects:   5% (5/98)
+Receiving objects:   6% (6/98)
+Receiving objects:   7% (7/98)
+Receiving objects:   8% (8/98)
+Receiving objects:   9% (9/98)
+Receiving objects:  10% (10/98)
+Receiving objects:  11% (11/98)
+Receiving objects:  12% (12/98)
+Receiving objects:  13% (13/98)
+Receiving objects:  14% (14/98)
+Receiving objects:  15% (15/98)
+Receiving objects:  16% (16/98)
+Receiving objects:  17% (17/98)
+Receiving objects:  18% (18/98)
+Receiving objects:  19% (19/98)
+Receiving objects:  20% (20/98)
+Receiving objects:  21% (21/98)
+Receiving objects:  22% (22/98)
+Receiving objects:  23% (23/98)
+Receiving objects:  24% (24/98)
+Receiving objects:  25% (25/98)
+Receiving objects:  26% (26/98)
+Receiving objects:  27% (27/98)
+Receiving objects:  28% (28/98)
+Receiving objects:  29% (29/98)
+Receiving objects:  30% (30/98)
+Receiving objects:  31% (31/98)
+Receiving objects:  32% (32/98)
+Receiving objects:  33% (33/98)
+Receiving objects:  34% (34/98)
+Receiving objects:  35% (35/98)
+Receiving objects:  36% (36/98)
+Receiving objects:  37% (37/98)
+Receiving objects:  38% (38/98)
+Receiving objects:  39% (39/98)
+Receiving objects:  40% (40/98)
+Receiving objects:  41% (41/98)
+Receiving objects:  42% (42/98)
+Receiving objects:  43% (43/98)
+Receiving objects:  44% (44/98)
+Receiving objects:  45% (45/98)
+Receiving objects:  46% (46/98)
+Receiving objects:  47% (47/98)
+Receiving objects:  48% (48/98)
+Receiving objects:  50% (49/98)
+Receiving objects:  51% (50/98)
+Receiving objects:  52% (51/98)
+Receiving objects:  53% (52/98)
+Receiving objects:  54% (53/98)
+Receiving objects:  55% (54/98)
+Receiving objects:  56% (55/98)
+Receiving objects:  57% (56/98)
+Receiving objects:  58% (57/98)
+Receiving objects:  59% (58/98)
+Receiving objects:  60% (59/98)
+Receiving objects:  61% (60/98)
+Receiving objects:  62% (61/98)
+Receiving objects:  63% (62/98)
+Receiving objects:  64% (63/98)
+Receiving objects:  65% (64/98)
+Receiving objects:  66% (65/98)
+Receiving objects:  67% (66/98)
+Receiving objects:  68% (67/98)
+Receiving objects:  69% (68/98)
+Receiving objects:  70% (69/98)
+Receiving objects:  71% (70/98)
+Receiving objects:  72% (71/98)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Receiving objects:  73% (72/98)
+Receiving objects:  74% (73/98)
+Receiving objects:  75% (74/98)
+Receiving objects:  76% (75/98)
+Receiving objects:  77% (76/98)
+Receiving objects:  78% (77/98)
+Receiving objects:  79% (78/98)
+Receiving objects:  80% (79/98)
+remote: Total 98 (delta 48), reused 91 (delta 44), pack-reused 0
+Receiving objects:  81% (80/98)
+Receiving objects:  82% (81/98)
+Receiving objects:  83% (82/98)
+Receiving objects:  84% (83/98)
+Receiving objects:  85% (84/98)
+Receiving objects:  86% (85/98)
+Receiving objects:  87% (86/98)
+Receiving objects:  88% (87/98)
+Receiving objects:  89% (88/98)
+Receiving objects:  90% (89/98)
+Receiving objects:  91% (90/98)
+Receiving objects:  92% (91/98)
+Receiving objects:  93% (92/98)
+Receiving objects:  94% (93/98)
+Receiving objects:  95% (94/98)
+Receiving objects:  96% (95/98)
+Receiving objects:  97% (96/98)
+Receiving objects:  98% (97/98)
+Receiving objects: 100% (98/98)
+Receiving objects: 100% (98/98), 658.01 KiB | 19.94 MiB/s, done.
+Resolving deltas:   0% (0/48)
+Resolving deltas:   2% (1/48)
+Resolving deltas:   4% (2/48)
+Resolving deltas:   6% (3/48)
+Resolving deltas:   8% (4/48)
+Resolving deltas:  10% (5/48)
+Resolving deltas:  12% (6/48)
+Resolving deltas:  14% (7/48)
+Resolving deltas:  16% (8/48)
+Resolving deltas:  18% (9/48)
+Resolving deltas:  20% (10/48)
+Resolving deltas:  22% (11/48)
+Resolving deltas:  25% (12/48)
+Resolving deltas:  27% (13/48)
+Resolving deltas:  29% (14/48)
+Resolving deltas:  31% (15/48)
+Resolving deltas:  33% (16/48)
+Resolving deltas:  35% (17/48)
+Resolving deltas:  37% (18/48)
+Resolving deltas:  39% (19/48)
+Resolving deltas:  41% (20/48)
+Resolving deltas:  43% (21/48)
+Resolving deltas:  45% (22/48)
+Resolving deltas:  47% (23/48)
+Resolving deltas:  50% (24/48)
+Resolving deltas:  52% (25/48)
+Resolving deltas:  54% (26/48)
+Resolving deltas:  56% (27/48)
+Resolving deltas:  58% (28/48)
+Resolving deltas:  60% (29/48)
+Resolving deltas:  62% (30/48)
+Resolving deltas:  64% (31/48)
+Resolving deltas:  66% (32/48)
+Resolving deltas:  68% (33/48)
+Resolving deltas:  70% (34/48)
+Resolving deltas:  72% (35/48)
+Resolving deltas:  75% (36/48)
+Resolving deltas:  77% (37/48)
+Resolving deltas:  79% (38/48)
+Resolving deltas:  81% (39/48)
+Resolving deltas:  83% (40/48)
+Resolving deltas:  85% (41/48)
+Resolving deltas:  87% (42/48)
+Resolving deltas:  89% (43/48)
+Resolving deltas:  91% (44/48)
+Resolving deltas:  93% (45/48)
+Resolving deltas:  95% (46/48)
+Resolving deltas:  97% (47/48)
+Resolving deltas: 100% (48/48)
+Resolving deltas: 100% (48/48), done.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading examples/female.wav (1.0 MB)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Error downloading object: examples/female.wav (89a4fa9): Smudge error: Error downloading examples/female.wav (89a4fa9a16b6463f852cf9424f72c3d3c87aa83010e89db534c53fcd1ae12c02): [89a4fa9a16b6463f852cf9424f72c3d3c87aa83010e89db534c53fcd1ae12c02] Object does not exist on the server: [404] Object does not exist on the server
+
+Errors logged to &#39;/home/runner/work/KIM/KIM/chapters/workshop_content/xtts-hf/.git/lfs/logs/20231017T195204.637799798.log&#39;.
+Use `git lfs logs last` to view the log.
+error: external filter &#39;git-lfs filter-process&#39; failed
+fatal: examples/female.wav: smudge filter lfs failed
+warning: Clone succeeded, but checkout failed.
+You can inspect what was checked out with &#39;git status&#39;
+and retry with &#39;git restore --source=HEAD :/&#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Errno 2] No such file or directory: &#39;/content/xtts-hf&#39;
+/home/runner/work/KIM/KIM/chapters/workshop_content
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>^C
+<span class=" -Color -Color-Red">ERROR: Operation cancelled by user</span>
+
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">23.2.1</span> -&gt; <span class=" -Color -Color-Green">23.3</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/xtts-hf/examples/female.wav: No such file or directory
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/content/xtts-hf/examples/male.wav: No such file or directory
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>python: can&#39;t open file &#39;/home/runner/work/KIM/KIM/chapters/workshop_content/app.py&#39;: [Errno 2] No such file or directory
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "HTW-ALADIN/kim",
+            ref: "source",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./chapters/workshop_content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Oleg Bissing, Paul Christ, Torsten Munkelt
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
